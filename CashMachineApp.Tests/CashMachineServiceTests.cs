@@ -19,7 +19,7 @@ namespace CashMachineApp.Tests
             var service = new CashMachineService();
             var result = service.Withdraw(amount);
 
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, result.Banknotes);
         }
 
         [Fact]
