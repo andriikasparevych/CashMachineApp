@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CashMachineApp.Controllers;
 using CashMachineApp.Exceptions;
 using CashMachineApp.Utils;
 
@@ -7,7 +6,7 @@ namespace CashMachineApp.Services
 {
     public class CashMachineService : ICashMachineService
     {
-        private int[] _availableNotes;
+        private readonly int[] _availableNotes;
 
         public CashMachineService()
         {
