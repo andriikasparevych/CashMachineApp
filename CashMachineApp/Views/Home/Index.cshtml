@@ -2,4 +2,48 @@
     ViewBag.Title = "Cash Machine";
 }
 
-<h2>ATM</h2>
+<h2>ATM Withdraw</h2>
+<text>Enter amount:</text>
+<input id="amount" type="number" min="0" required/>
+<button id="withdrawBtn">Withdraw</button>
+
+<text id="resultTxt"></text>
+
+<script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+
+<script>
+
+    $("#withdrawBtn").click(function () {
+        validateAmount();
+        var amount = $("#amount").val();
+        withdraw(amount);
+    });
+
+    function validateAmount() {
+        if (!$("#amount")[0].checkValidity()) {
+            $("#resultTxt").text("Invalid input");
+        }
+    }
+
+    function withdraw(amount) {
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Withdraw", "CashMachine")',
+                data: {
+                    amount: amount
+                },
+                error: function (result) {
+                    $("#resultTxt").text(result.responseText);
+                },
+                success: function (result) {
+                    $("#resultTxt").text(result);
+                }
+            });
+
+    }
+
+</script>

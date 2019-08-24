@@ -7,6 +7,10 @@ namespace CashMachineApp.Utils
 {
     public static class ArrayUtils
     {
+        public static string ToDisplayString(this int[] arr)
+        {
+            return string.Join(",", arr);
+        }
 
         public static void SortDesc(int[] arr)
         {

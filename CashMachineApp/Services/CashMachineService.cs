@@ -50,13 +50,13 @@ namespace CashMachineApp.Services
         {
             if (amount < 0)
             {
-                throw new InvalidArgumentException();
+                throw new InvalidArgumentException("Please provide a valid amount");
             }
 
             var lowestValueNote = _availableNotes[_availableNotes.Length - 1];
             if (amount % lowestValueNote != 0)
             {
-                throw new NoteUnavailableException();
+                throw new NoteUnavailableException($"Cannot withdraw this amount. Available notes are: {_availableNotes.ToDisplayString()}");
             }
             
         }
