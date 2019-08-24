@@ -1,4 +1,4 @@
-﻿namespace CashMachineApp.Controllers
+﻿namespace CashMachineApp.Services
 {
     public interface ICashMachineService
     {
