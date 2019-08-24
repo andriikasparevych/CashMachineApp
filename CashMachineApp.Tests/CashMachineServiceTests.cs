@@ -1,4 +1,4 @@
-using CashMachineApp.Controllers;
+using CashMachineApp.Services;
 using Xunit;
 
 namespace CashMachineApp.Tests
