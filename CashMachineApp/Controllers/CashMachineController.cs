@@ -12,6 +12,8 @@ namespace CashMachineApp.Controllers
             _cashMachineService = cashMachineService;
         }
 
+        // The requirement says the input values shoul be 30.00, 80.00 etc which suggests decimal type
+        // But it doesn't make sense since we are working with banknotes only, hence using int for simplicity
         [HttpPost]
         public int[] Withdraw(int amount)
         {
