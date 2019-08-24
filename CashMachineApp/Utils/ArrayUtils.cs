@@ -48,7 +48,7 @@ namespace CashMachineApp.Utils
             return sb.ToString();
         }
 
-        public static void SortDesc(int[] arr)
+        public static void SortDesc(this int[] arr)
         {
             if (arr == null) throw new ArgumentNullException(nameof(arr));
             QuickSortDesc(arr, 0, arr.Length - 1);

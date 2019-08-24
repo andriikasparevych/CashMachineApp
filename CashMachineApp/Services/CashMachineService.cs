@@ -15,7 +15,7 @@ namespace CashMachineApp.Services
 
             // Make sure the available notes array is sorted desc 
             // to pick up the largest note possible first
-            ArrayUtils.SortDesc(_availableNotes);
+            _availableNotes.SortDesc();
         }
 
         public BanknotesWithdrawal Withdraw(int amount)
