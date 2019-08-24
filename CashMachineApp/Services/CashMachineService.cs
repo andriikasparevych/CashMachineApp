@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CashMachineApp.Exceptions;
+using CashMachineApp.Models;
 using CashMachineApp.Utils;
 
 namespace CashMachineApp.Services
@@ -17,11 +18,12 @@ namespace CashMachineApp.Services
             ArrayUtils.SortDesc(_availableNotes);
         }
 
-        public int[] Withdraw(int amount)
+        public BanknotesWithdrawal Withdraw(int amount)
         {
             this.ValidateAmount(amount);
             var notes = this.FindBestNotesCombination(amount);
-            return notes;
+
+            return new BanknotesWithdrawal(notes, notes.ToDisplayString());
         }
 
         private int[] FindBestNotesCombination(int amount)

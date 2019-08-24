@@ -1,7 +1,9 @@
-﻿namespace CashMachineApp.Services
+﻿using CashMachineApp.Models;
+
+namespace CashMachineApp.Services
 {
     public interface ICashMachineService
     {
-        int[] Withdraw(int amount);
+        BanknotesWithdrawal Withdraw(int amount);
     }
 }
