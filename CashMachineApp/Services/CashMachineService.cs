@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CashMachineApp.Controllers;
+using CashMachineApp.Exceptions;
 using CashMachineApp.Utils;
 
 namespace CashMachineApp.Services
@@ -19,6 +20,7 @@ namespace CashMachineApp.Services
 
         public int[] Withdraw(int amount)
         {
+            this.ValidateAmount(amount);
             var notes = this.FindBestNotesCombination(amount);
             return notes;
         }
@@ -43,6 +45,21 @@ namespace CashMachineApp.Services
             }
 
             return result.ToArray();
+        }
+
+        private void ValidateAmount(int amount)
+        {
+            if (amount < 0)
+            {
+                throw new InvalidArgumentException();
+            }
+
+            var lowestValueNote = _availableNotes[_availableNotes.Length - 1];
+            if (amount % lowestValueNote != 0)
+            {
+                throw new NoteUnavailableException();
+            }
+            
         }
     }
 }
