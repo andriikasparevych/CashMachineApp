@@ -1,49 +1,79 @@
 ﻿@{
     ViewBag.Title = "Cash Machine";
+    Layout = "_Layout";
 }
 
-<h2>ATM Withdraw</h2>
-<text>Enter amount:</text>
-<input id="amount" type="number" min="0" required/>
-<button id="withdrawBtn">Withdraw</button>
+<div class="page-header text-center" >
+    <h2 >Withdraw Money</h2>
+</div>
+<div class="container-fluid">
+    <div class="text-center">
+        <div class="panel-title">
+            <h3>Enter amount:</h3>
+        </div>
+        <div class="panel-body">
+            <div class="panel-group">
+                <input id="amount" type="number" min="0" required class="input-lg" placeholder="Amount"/>
+            </div>
 
-<text id="resultTxt"></text>
+            <div class="panel-group">
+                <button id="withdrawBtn" class="btn btn-primary">Withdraw</button>
+            </div>
+        </div>
+        <div class="panel-danger">
+            <p id="resultTxt"></p>
+        </div>
+    </div>
+</div>
 
-<script
-    src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-    crossorigin="anonymous"></script>
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
 
-<script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-    $("#withdrawBtn").click(function () {
-        validateAmount();
-        var amount = $("#amount").val();
-        withdraw(amount);
-    });
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 
-    function validateAmount() {
-        if (!$("#amount")[0].checkValidity()) {
-            $("#resultTxt").text("Invalid input");
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+    <script>
+
+        $("#withdrawBtn").click(function() {
+            if (validateAmount()) {
+                var amount = $("#amount").val();
+                withdraw(amount);
+            }
+        });
+
+        function validateAmount() {
+            if (!$("#amount")[0].checkValidity()) {
+                $("#resultTxt").text("Invalid input");
+                return false;
+            }
+            return true;
         }
-    }
 
-    function withdraw(amount) {
-        $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Withdraw", "CashMachine")',
-                data: {
-                    amount: amount
-                },
-                error: function (result) {
-                    $("#resultTxt").text(result.responseText);
-                },
-                success: function (result) {
-                    $("#resultTxt").text(result);
-                }
-            });
+        function withdraw(amount) {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: '@Url.Action("Withdraw", "CashMachine")',
+                    data: {
+                        amount: amount
+                    },
+                    error: function(result) {
+                        $("#resultTxt").text(result.responseText);
+                    },
+                    success: function(result) {
+                        $("#resultTxt").text(result);
+                    }
+                });
 
-    }
-
-</script>
+        }
+    </script>
+}
