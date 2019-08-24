@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using CashMachineApp.Models;
 using CashMachineApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
