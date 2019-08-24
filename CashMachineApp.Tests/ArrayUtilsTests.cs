@@ -28,5 +28,15 @@ namespace CashMachineApp.Tests
 
             Assert.Throws<ArgumentNullException>(act);
         }
+
+        [Theory]
+        [InlineData(new[] {1,1,1,3,5,5}, "3x1, 3, 2x5")]
+        [InlineData(new[] {1,5}, "1, 5")]
+        public void ToDisplayString_ShouldReturn_Expected(int[] input, string expected)
+        {
+            var res = input.ToDisplayString();
+
+            Assert.Equal(expected, res);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CashMachineApp.Utils
@@ -9,7 +10,42 @@ namespace CashMachineApp.Utils
     {
         public static string ToDisplayString(this int[] arr)
         {
-            return string.Join(",", arr);
+            var dic = new Dictionary<int, int>();
+            var sb = new StringBuilder();
+            foreach (var i in arr)
+            {
+                if (dic.ContainsKey(i))
+                {
+                    dic[i]++;
+                }
+                else
+                {
+                    dic.Add(i, 1);
+                }
+            }
+
+            var currentEl = 0;
+            foreach (var kvp in dic)
+            {
+
+                if (kvp.Value > 1)
+                {
+                    sb.Append($"{kvp.Value}x{kvp.Key}");
+                }
+                else
+                {
+                    sb.Append(kvp.Key);
+                }
+
+                if (currentEl < dic.Count - 1)
+                {
+                    sb.Append(", ");
+                }
+
+                currentEl++;
+            }
+
+            return sb.ToString();
         }
 
         public static void SortDesc(int[] arr)

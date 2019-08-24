@@ -50,14 +50,6 @@
             }
         });
 
-        function validateAmount() {
-            if (!$("#amount")[0].checkValidity()) {
-                $("#resultTxt").text("Invalid input");
-                return false;
-            }
-            return true;
-        }
-
         function withdraw(amount) {
             $.ajax(
                 {
@@ -67,13 +59,28 @@
                         amount: amount
                     },
                     error: function(result) {
-                        $("#resultTxt").text(result.responseText);
+                        setResult(result.responseJSON.Message, true);
                     },
                     success: function(result) {
-                        $("#resultTxt").text(result);
+                        setResult("Please take your money : " + result.displayText, true);
                     }
                 });
 
+        }
+
+        function validateAmount() {
+            if (!$("#amount")[0].checkValidity()) {
+                setResult("Invalid input", true);
+                return false;
+            }
+            return true;
+        }
+
+        function setResult(text, clearInput) {
+            $("#resultTxt").text(text);
+            if (clearInput) {
+                $("#amount").val("");
+            }
         }
     </script>
 }
