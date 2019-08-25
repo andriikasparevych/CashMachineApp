@@ -7,33 +7,32 @@ namespace CashMachineApp.Services
 {
     public class CashMachineService : ICashMachineService
     {
-        private readonly int[] _availableNotes;
+        private readonly ICashMachineStatusService _statusService;
 
-        public CashMachineService()
+        public CashMachineService(ICashMachineStatusService statusService)
         {
-            _availableNotes = new[] { 10,20,50,100 };
-
-            // Make sure the available notes array is sorted desc 
-            // to pick up the largest note possible first
-            _availableNotes.SortDesc();
+            _statusService = statusService;
         }
 
         public BanknotesWithdrawal Withdraw(int amount)
         {
-            this.ValidateAmount(amount);
-            var notes = this.FindBestNotesCombination(amount);
+            var availableNotes = _statusService.GetAvailableBanknotes();
+            availableNotes.SortDesc();
+
+            this.ValidateAmount(amount, availableNotes);
+            var notes = this.FindBestNotesCombination(amount, availableNotes);
 
             return new BanknotesWithdrawal(notes, notes.ToDisplayString());
         }
 
-        private int[] FindBestNotesCombination(int amount)
+        private int[] FindBestNotesCombination(int amount, int[] availableNotes)
         {
             var result = new List<int>();
             var i = 0;
             
             while (amount != 0)
             {
-                var currentNote = _availableNotes[i];
+                var currentNote = availableNotes[i];
                 if (currentNote <= amount)
                 {
                     result.Add(currentNote);
@@ -48,17 +47,17 @@ namespace CashMachineApp.Services
             return result.ToArray();
         }
 
-        private void ValidateAmount(int amount)
+        private void ValidateAmount(int amount, int[] availableNotes)
         {
             if (amount < 0)
             {
                 throw new InvalidArgumentException("Please provide a valid amount");
             }
 
-            var lowestValueNote = _availableNotes[_availableNotes.Length - 1];
+            var lowestValueNote = availableNotes[availableNotes.Length - 1];
             if (amount % lowestValueNote != 0)
             {
-                throw new NoteUnavailableException($"Cannot withdraw this amount. Available notes are: {_availableNotes.ToDisplayString()}");
+                throw new NoteUnavailableException($"Cannot withdraw this amount. Available notes are: {availableNotes.ToDisplayString()}");
             }
             
         }

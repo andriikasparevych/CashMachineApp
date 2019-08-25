@@ -18,6 +18,8 @@ namespace CashMachineApp
             services.AddMvc();
 
             services.AddTransient<ICashMachineService, CashMachineService>();
+            services.AddTransient<ICashMachineStatusService, ConfigCashMachineStatusService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
